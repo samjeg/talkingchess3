@@ -1,0 +1,36 @@
+{% extends "chess_app/base.html" %}
+{% load static %}
+{% block title %}Profile Form{% endblock %}
+{% block templatecss %}<link href="{% static 'css/register.css' %}" rel="stylesheet" />{% endblock %}
+{% block profile_nav %}
+  {% if profile_detail %}
+    <li class="nav-item">
+      <a name="profile_nav" class="nav-link" href="{% url 'chess_app:profile_detail' pk=profile_detail.pk %}">Profile</a>
+    </li>
+  {% else %}
+     <li class="nav-item">
+      <a name="create_profile_nav" class="nav-link" href="{% url 'chess_app:create_profile' %}"">Create Profile</a>
+      </li>
+  {% endif %}
+{% endblock %}
+{% block imagenav %}
+  {% if profile_detail %}
+    <img class="imageframe" src="../../../media/{{ profile_detail.picture }}"" alt="empty">
+  {% else %}
+     <img class="imageframe" src="{% static 'images/grey.jpg' %}" alt="empty">
+  {% endif %}
+{% endblock %}
+{% block content %}
+   <br>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="register-container">
+        {{ form.as_p }}
+        <button name="reg_submit_btn" type="submit" class="btn btn-primary btn-btn">Register</button>
+      </div>
+      <div class="button-container">
+          <span class="psw">Already a User?     <a href="{% url 'chess_app:login' %}">Login Here</a></span>
+      </div>
+    </form>
+    <br>
+{% endblock %}

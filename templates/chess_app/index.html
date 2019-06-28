@@ -1,0 +1,49 @@
+{% extends "chess_app/base_footer.html" %}
+{% load static %}
+{% block title %}Home Page{% endblock %}
+{% block templatecss %}<link href="{% static 'css/style.css' %}" rel="stylesheet" />{% endblock %}
+{% block profile_nav %}
+  {% if profile_detail %}
+    <li class="nav-item">
+      <a name="profile_nav" class="nav-link" href="{% url 'chess_app:profile_detail' pk=profile_detail.pk %}">Profile</a>
+    </li>
+  {% else %}
+     <li class="nav-item">
+      <a name="create_profile_nav" class="nav-link" href="{% url 'chess_app:create_profile' %}">Create Picture</a>
+      </li>
+  {% endif %}
+{% endblock %}
+{% block imagenav %}
+  {% if profile_detail %}
+    <img class="imageframe" src="../../../media/{{ profile_detail.picture }}" alt="empty">
+  {% else %}
+     <img class="imageframe" src="{% static 'images/grey.jpg' %}" alt="empty">
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+   <img class="center" src="{% static 'images/robot_pic.jpg' %}"/>
+    
+    <div>Logo made with <a href="/en/" title="Free Online Logo Maker">DesignEvo</a></div>
+    <br>
+    <h1 name="index_text" class="my-4">Enjoy playing chess with this can of bolts.</h1>
+    <br>
+    {% if chess_detail %}
+      <div>
+        <a 
+          name="cont_game_btn" 
+          class="btn btn-primary btn-btn" 
+          href="{% url 'chess_app:chess_detail' pk=chess_detail.pk %}"
+        >
+          Continue Game
+        </a>
+      </div>
+    {% else %}  
+      <form method="POST">
+        {% csrf_token %}
+        {{ chess_form.as_p }}
+        <input name="new_chessboard_btn" type="Submit" class="btn btn-primary btn-btn" value="New Game" />
+      </form>
+    {%  endif %}
+    <br>
+{% endblock %}
