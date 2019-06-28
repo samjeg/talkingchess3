@@ -200,16 +200,22 @@ class ChessboardDetailView(FormMixin, DetailView):
 		comment_form = forms.ChessboardCommentForm()
 		chessboard = self.get_object()
 		if user.is_authenticated:
+			if form.is_valid:
+				chess_data = form.data.get('user_input_state')
+				if chess_data == "green_btn":
+					context['state'] = "Apple"
+				else:
+					context['state'] = "Orange"
 			for profile in profiles:
 				if user.id == profile.user.id:
 					context['profile_detail'] = profile
 					form.initial['player'] = user.id
 					form.fields['player'].widget = django_forms.HiddenInput()
 					context['chess_form'] = form
-					form.initial['user'] = user.id
-					form.initial['chessboard'] = chessboard.id
-					form.initial['comment_picture_path'] = profile.picture
-					context['comment_form'] = form
+					comment_form.initial['user'] = user.id
+					comment_form.initial['chessboard'] = chessboard.id
+					comment_form.initial['comment_picture_path'] = profile.picture
+					context['comment_form'] = comment_form
 		return context
 
 

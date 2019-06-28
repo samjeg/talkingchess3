@@ -44,4 +44,5 @@ class ChessboardForm(forms.Form):
 	def __init__(self, *args, **kwargs):
 		super(ChessboardForm, self).__init__(*args, **kwargs)
 		self.fields['user_input_state'].widget.attrs['id'] = 'input_state'
+		
 

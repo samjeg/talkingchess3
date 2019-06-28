@@ -1,0 +1,29 @@
+{% block profile_nav %}
+  {% if profile_detail %}
+    <li class="nav-item">
+      <a name="profile_nav" class="nav-link" href="{% url 'chess_app:profile_detail' pk=profile_detail.pk %}">Profile</a>
+    </li>
+  {% else %}
+    <li class="nav-item">
+      <a name="create_profile_nav" class="nav-link" href="{% url 'chess_app:create_profile' %}">Create Picture</a>
+    </li>
+  {% endif %}
+{% endblock %}
+{% block chessboard_nav %}
+  {% if chess_detail %}
+    <li class="nav-item">
+      <a name="chess_nav" class="nav-link" href="{% url 'chess_app:chess_detail' pk=chess_detail.pk %}">Back to Game</a>
+    </li>
+  {% else %}
+    <li class="nav-item">
+      <a name="create_chess_nav" class="nav-link" href="{% url 'chess_app:profile_detail' pk=profile_detail.pk %}">New Game</a>
+    </li>
+  {% endif %}
+{% endblock %}
+{% block imagenav %}
+  {% if profile_detail %}
+    <img class="imageframe" src="../../../media/{{ profile_detail.picture }}" alt="empty">
+  {% else %}
+    <img class="imageframe" src="{% static 'images/grey.jpg' %}" alt="empty">
+  {% endif %}
+{% endblock %}
